@@ -2,16 +2,19 @@ package com.springrest.springrest.service;
 
 import com.springrest.springrest.dao.CourseDao;
 import com.springrest.springrest.entities.Course;
+import jdk.jfr.Threshold;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
+@Transactional
 public class CourseServiceImpl implements CourseService{
 //    public List<Course> courses;
     @Autowired
@@ -39,7 +42,11 @@ public class CourseServiceImpl implements CourseService{
 //            }
 //        }
 //        return course;
-        return courseDao.getOne(courseId);
+//        System.out.println('came in');
+        if(courseDao.findById(courseId).isPresent()) {
+            return courseDao.findById(courseId).get();
+        }
+        return null;
     }
 
     @Override

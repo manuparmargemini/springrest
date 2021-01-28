@@ -25,6 +25,11 @@ public class SpringrestController {
         return this.courseService.getCourses();
     }
 
+    @GetMapping("/courses/{courseId}")
+    public Course getCourse(@PathVariable("courseId") String courseId) {
+        return this.courseService.getCourse(Long.parseLong(courseId));
+    }
+
     @PostMapping("courses")
     public Course addCourse(@RequestBody Course course) {
         return this.courseService.addCourse(course);
